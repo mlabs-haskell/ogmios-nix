@@ -47,16 +47,28 @@
         let
           pkgs = nixpkgsFor system;
 
+          cleanSource =
+            nixpkgs.lib.cleanSourceWith {
+              name = "ogmios-src-clean";
+              src = "${ogmios-src}/server";
+              filter = path: type: builtins.all (x: x) [ (baseNameOf path != "package.yaml") ];
+            };
+
+          withTestVectors =
+            pkgs.stdenvNoCC.mkDerivation {
+              name = "ogmios-src-with-test-vectors";
+              src = cleanSource;
+              phases = [ "unpackPhase" "installPhase" ];
+              installPhase = ''
+                cp -r . $out
+                rm $out/ogmios.json
+                cp ${ogmios-src}/docs/static/ogmios.json $out/
+              '';
+              preferLocalBuild = true;
+            };
         in
         pkgs.haskell-nix.cabalProject {
-          src = nixpkgs.lib.cleanSourceWith {
-            name = "ogmios-src";
-            src = "${ogmios-src}/server";
-            filter = path: type:
-              builtins.all (x: x) [
-                (baseNameOf path != "package.yaml")
-              ];
-          };
+          src = withTestVectors;
           inputMap = {
             "https://input-output-hk.github.io/cardano-haskell-packages" = CHaP;
           };
