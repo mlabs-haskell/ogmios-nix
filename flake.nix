@@ -54,21 +54,9 @@
               filter = path: type: builtins.all (x: x) [ (baseNameOf path != "package.yaml") ];
             };
 
-          withTestVectors =
-            pkgs.stdenvNoCC.mkDerivation {
-              name = "ogmios-src-with-test-vectors";
-              src = cleanSource;
-              phases = [ "unpackPhase" "installPhase" ];
-              installPhase = ''
-                cp -r . $out
-                rm $out/ogmios.json
-                cp ${ogmios-src}/docs/static/ogmios.json $out/
-              '';
-              preferLocalBuild = true;
-            };
         in
         pkgs.haskell-nix.cabalProject {
-          src = withTestVectors;
+          src = cleanSource;
           inputMap = {
             "https://input-output-hk.github.io/cardano-haskell-packages" = CHaP;
           };
@@ -90,6 +78,7 @@
             {
               "https://github.com/CardanoSolutions/cardano-ledger"."558cad41ef01a35ac62c28cf06e954fdfd790e28" = "0vrjfhffs5m01qkhjr2vyilwk18x96x2xg3w4r9kdil3kxj3wla3";
             };
+
 
 
           modules = [{
@@ -127,13 +116,13 @@
           } "touch $out"
       );
 
-      # HACK
-      # Only include `ogmios:test:unit` and just build/run that
-      # We could configure this via haskell.nix, but this is
-      # more convenient
-      checks = perSystem (system: {
-        inherit (self.flake.${system}.checks) "ogmios:test:unit";
-      });
+      # # HACK
+      # # Only include `ogmios:test:unit` and just build/run that
+      # # We could configure this via haskell.nix, but this is
+      # # more convenient
+      # checks = perSystem (system: {
+      #   inherit (self.flake.${system}.checks) "ogmios:test:unit";
+      # });
 
       herculesCI.ciSystems = [ "x86_64-linux" "x86_64-darwin" ];
     };
