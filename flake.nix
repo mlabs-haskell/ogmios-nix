@@ -3,7 +3,7 @@
 
   inputs = {
     ogmios-src = {
-      url = "github:CardanoSolutions/ogmios/v6.0.1";
+      url = "github:CardanoSolutions/ogmios?ref=v6.1.0";
       flake = false;
     };
 
@@ -14,27 +14,14 @@
 
     nixpkgs.follows = "haskell-nix/nixpkgs-unstable";
 
-    # TODO: cleanup after cardano-node inputs are fixed
-    cardano-node.url = "github:input-output-hk/cardano-node/8.7.3";
-    blank.url = "github:divnix/blank";
-
-    # TODO: remove after new testnets land in cardano-node
-    cardano-configurations = {
-      url = "github:input-output-hk/cardano-configurations";
-      flake = false;
-    };
+    cardano-node.url = "github:input-output-hk/cardano-node?ref=8.8.0-pre";
 
     iohk-nix.follows = "cardano-node/iohkNix";
-
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
 
     CHaP.follows = "cardano-node/CHaP";
   };
 
-  outputs = { self, ogmios-src, nixpkgs, haskell-nix, iohk-nix, CHaP, ... }@inputs:
+  outputs = { self, ogmios-src, nixpkgs, haskell-nix, iohk-nix, CHaP, ... }:
     let
       defaultSystems = [
         "x86_64-linux"
@@ -59,23 +46,52 @@
       projectFor = { system }:
         let
           pkgs = nixpkgsFor system;
-          src = nixpkgs.lib.cleanSourceWith {
-            name = "ogmios-src";
-            src = "${ogmios-src}/server";
-            filter = path: type:
-              builtins.all (x: x) [
-                (baseNameOf path != "package.yaml")
-              ];
-          };
+
+          cleanSource =
+            nixpkgs.lib.cleanSourceWith {
+              name = "ogmios-src-clean";
+              src = "${ogmios-src}/server";
+              filter = path: type: builtins.all (x: x) [ (baseNameOf path != "package.yaml") ];
+            };
 
         in
-        import ./nix {
-          inherit src pkgs system;
+        pkgs.haskell-nix.cabalProject {
+          src = cleanSource;
           inputMap = {
             "https://input-output-hk.github.io/cardano-haskell-packages" = CHaP;
           };
-        };
+          name = "ogmios";
+          compiler-nix-name = "ghc963";
 
+          shell = {
+            inputsFrom = [ pkgs.libsodium-vrf ];
+            withHoogle = true;
+            tools = {
+              cabal = "latest";
+              haskell-language-server = "latest";
+            };
+            exactDeps = true;
+            nativeBuildInputs = [ pkgs.libsodium-vrf pkgs.secp256k1 ];
+          };
+
+          sha256map =
+            {
+              "https://github.com/CardanoSolutions/cardano-ledger"."558cad41ef01a35ac62c28cf06e954fdfd790e28" = "0vrjfhffs5m01qkhjr2vyilwk18x96x2xg3w4r9kdil3kxj3wla3";
+            };
+
+
+
+          modules = [{
+            packages = {
+              cardano-crypto-praos.components.library.pkgconfig =
+                pkgs.lib.mkForce [ [ pkgs.libsodium-vrf ] ];
+
+              cardano-crypto-class.components.library.pkgconfig =
+                pkgs.lib.mkForce [ [ pkgs.libsodium-vrf pkgs.secp256k1 pkgs.libblst ] ];
+            };
+          }];
+
+        };
     in
     {
       flake = perSystem (system: (projectFor { inherit system; }).flake { });
@@ -87,14 +103,6 @@
       packages = perSystem (system:
         self.flake.${system}.packages
       );
-
-      apps = perSystem (system:
-        self.flake.${system}.apps // {
-          vm = {
-            type = "app";
-            program = "${self.nixosConfigurations.test.config.system.build.vm}/bin/run-nixos-vm";
-          };
-        });
 
       devShell = perSystem (system: self.flake.${system}.devShell);
 
@@ -108,34 +116,13 @@
           } "touch $out"
       );
 
-      # HACK
-      # Only include `ogmios:test:unit` and just build/run that
-      # We could configure this via haskell.nix, but this is
-      # more convenient
-      checks = perSystem (system: {
-        # # Tests fail with following error:
-        # # unit: user error (FSReadFailure ogmios.json: withBinaryFile: does not exist (No such file or directory))
-        # inherit (self.flake.${system}.checks) "ogmios:test:unit";
-      });
-
-      nixosModules.ogmios = { pkgs, ... }: {
-        imports = [ ./nix/ogmios-nixos-module.nix ];
-        nixpkgs.overlays = [
-          (_: _: {
-            ogmios = self.flake.${pkgs.system}.packages."ogmios:exe:ogmios";
-            inherit (inputs) cardano-configurations;
-          })
-        ];
-      };
-
-      nixosConfigurations.test = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          inputs.cardano-node.nixosModules.cardano-node
-          self.nixosModules.ogmios
-          ./nix/test-nixos-configuration.nix
-        ];
-      };
+      # # HACK
+      # # Only include `ogmios:test:unit` and just build/run that
+      # # We could configure this via haskell.nix, but this is
+      # # more convenient
+      # checks = perSystem (system: {
+      #   inherit (self.flake.${system}.checks) "ogmios:test:unit";
+      # });
 
       herculesCI.ciSystems = [ "x86_64-linux" "x86_64-darwin" ];
     };
