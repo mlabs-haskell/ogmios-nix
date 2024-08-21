@@ -3,7 +3,7 @@
 
   inputs = {
     ogmios-src = {
-      url = "github:CardanoSolutions/ogmios?ref=v6.1.0";
+      url = "github:CardanoSolutions/ogmios?ref=v6.6.0";
       flake = false;
     };
 
@@ -14,7 +14,7 @@
 
     nixpkgs.follows = "haskell-nix/nixpkgs-unstable";
 
-    cardano-node.url = "github:input-output-hk/cardano-node?ref=8.8.0-pre";
+    cardano-node.url = "github:input-output-hk/cardano-node?ref=9.1.0";
 
     iohk-nix.follows = "cardano-node/iohkNix";
 
@@ -76,7 +76,7 @@
 
           sha256map =
             {
-              "https://github.com/CardanoSolutions/cardano-ledger"."558cad41ef01a35ac62c28cf06e954fdfd790e28" = "0vrjfhffs5m01qkhjr2vyilwk18x96x2xg3w4r9kdil3kxj3wla3";
+              "https://github.com/CardanoSolutions/cardano-ledger"."9ab8b326981a94d4b57cb0427709845ab67ef975" = "1lwbiq7lgla6fgz0n8vgxlbws3n9fxf5y0ixmzn8yxdcn917brq1";
             };
 
 
