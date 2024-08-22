@@ -14,11 +14,15 @@
 
     nixpkgs.follows = "haskell-nix/nixpkgs-unstable";
 
-    cardano-node.url = "github:input-output-hk/cardano-node?ref=9.1.0";
+    CHaP = {
+      url = "github:intersectmbo/cardano-haskell-packages?ref=repo";
+      flake = false;
+    };
 
-    iohk-nix.follows = "cardano-node/iohkNix";
-
-    CHaP.follows = "cardano-node/CHaP";
+    iohk-nix = {
+      url = "github:input-output-hk/iohk-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, ogmios-src, nixpkgs, haskell-nix, iohk-nix, CHaP, ... }:
@@ -61,15 +65,10 @@
             "https://input-output-hk.github.io/cardano-haskell-packages" = CHaP;
           };
           name = "ogmios";
-          compiler-nix-name = "ghc963";
+          compiler-nix-name = "ghc966";
 
           shell = {
             inputsFrom = [ pkgs.libsodium-vrf ];
-            withHoogle = true;
-            tools = {
-              cabal = "latest";
-              haskell-language-server = "latest";
-            };
             exactDeps = true;
             nativeBuildInputs = [ pkgs.libsodium-vrf pkgs.secp256k1 ];
           };
@@ -78,8 +77,6 @@
             {
               "https://github.com/CardanoSolutions/cardano-ledger"."9ab8b326981a94d4b57cb0427709845ab67ef975" = "1lwbiq7lgla6fgz0n8vgxlbws3n9fxf5y0ixmzn8yxdcn917brq1";
             };
-
-
 
           modules = [{
             packages = {
