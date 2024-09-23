@@ -75,7 +75,7 @@
 
           sha256map =
             {
-              "https://github.com/CardanoSolutions/cardano-ledger"."9ab8b326981a94d4b57cb0427709845ab67ef975" = "1lwbiq7lgla6fgz0n8vgxlbws3n9fxf5y0ixmzn8yxdcn917brq1";
+              "https://github.com/CardanoSolutions/cardano-ledger"."8112c9872f52e5147e28fbdd76a034cdb6eb7fea" = "0lzz5fcl73xz2cq5727q4a7q1855ihrx5wapadlm8izhjvxv4dxb";
             };
 
           modules = [{
