@@ -3,7 +3,7 @@
 
   inputs = {
     ogmios-src = {
-      url = "github:CardanoSolutions/ogmios?ref=v6.6.0";
+      url = "github:CardanoSolutions/ogmios?ref=v6.6.2";
       flake = false;
     };
 
