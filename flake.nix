@@ -3,7 +3,7 @@
 
   inputs = {
     ogmios-src = {
-      url = "github:CardanoSolutions/ogmios?ref=v6.7.1";
+      url = "github:CardanoSolutions/ogmios?ref=v6.9.0";
       flake = false;
     };
 
@@ -75,7 +75,7 @@
 
           sha256map =
             {
-              "https://github.com/CardanoSolutions/cardano-ledger"."9ab8b326981a94d4b57cb0427709845ab67ef975" = "1lwbiq7lgla6fgz0n8vgxlbws3n9fxf5y0ixmzn8yxdcn917brq1";
+              "https://github.com/CardanoSolutions/cardano-ledger"."f051a2ed0db076a869d14643a65ce6e8250b6324" = "1zi91lzms5kyjmc7r0p12hrvyg34dyqcvz3bkvsw9djjj4gngkbf";
             };
 
           modules = [{
