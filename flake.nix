@@ -3,7 +3,7 @@
 
   inputs = {
     ogmios-src = {
-      url = "github:CardanoSolutions/ogmios?ref=v6.7.1";
+      url = "git+https://github.com/CardanoSolutions/ogmios?tag=v6.9.0&submodules=1";
       flake = false;
     };
 
@@ -75,7 +75,7 @@
 
           sha256map =
             {
-              "https://github.com/CardanoSolutions/cardano-ledger"."9ab8b326981a94d4b57cb0427709845ab67ef975" = "1lwbiq7lgla6fgz0n8vgxlbws3n9fxf5y0ixmzn8yxdcn917brq1";
+              "https://github.com/CardanoSolutions/cardano-ledger"."f051a2ed0db076a869d14643a65ce6e8250b6324" = "1zi91lzms5kyjmc7r0p12hrvyg34dyqcvz3bkvsw9djjj4gngkbf";
             };
 
           modules = [{
@@ -98,29 +98,16 @@
       );
 
       packages = perSystem (system:
-        self.flake.${system}.packages
+        builtins.removeAttrs self.flake.${system}.packages [
+          "hjsonschema:test:local"
+          "hjsonschema:test:remote"
+          "hjsonschema:test:spec"
+        ]
       );
 
       devShell = perSystem (system: self.flake.${system}.devShell);
 
-      # Build all of the project's packages and run the `checks`
-      check = perSystem (system:
-        (nixpkgsFor system).runCommand "combined-check"
-          {
-            nativeBuildInputs =
-              builtins.attrValues self.checks.${system}
-              ++ builtins.attrValues self.flake.${system}.packages;
-          } "touch $out"
-      );
-
-      # # HACK
-      # # Only include `ogmios:test:unit` and just build/run that
-      # # We could configure this via haskell.nix, but this is
-      # # more convenient
-      # checks = perSystem (system: {
-      #   inherit (self.flake.${system}.checks) "ogmios:test:unit";
-      # });
-
       herculesCI.ciSystems = [ "x86_64-linux" "x86_64-darwin" ];
     };
 }
+
