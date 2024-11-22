@@ -98,28 +98,14 @@
       );
 
       packages = perSystem (system:
-        self.flake.${system}.packages
+        builtins.removeAttrs self.flake.${system}.packages [
+          "hjsonschema:test:local"
+          "hjsonschema:test:remote"
+          "hjsonschema:test:spec"
+        ]
       );
 
       devShell = perSystem (system: self.flake.${system}.devShell);
-
-      # Build all of the project's packages and run the `checks`
-      check = perSystem (system:
-        (nixpkgsFor system).runCommand "combined-check"
-          {
-            nativeBuildInputs =
-              builtins.attrValues self.checks.${system}
-              ++ builtins.attrValues self.flake.${system}.packages;
-          } "touch $out"
-      );
-
-      # # HACK
-      # # Only include `ogmios:test:unit` and just build/run that
-      # # We could configure this via haskell.nix, but this is
-      # # more convenient
-      # checks = perSystem (system: {
-      #   inherit (self.flake.${system}.checks) "ogmios:test:unit";
-      # });
 
       herculesCI.ciSystems = [ "x86_64-linux" "x86_64-darwin" ];
     };
