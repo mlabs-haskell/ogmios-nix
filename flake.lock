@@ -154,11 +154,11 @@
     "hackage": {
       "flake": false,
       "locked": {
-        "lastModified": 1732148935,
-        "narHash": "sha256-zRj4ndWzyY9JFG3c8SCIxlFHefgS0YEazpq580gE3dk=",
+        "lastModified": 1732235401,
+        "narHash": "sha256-kiRyU+gifpcpazoCsKZpWMDXuG2Ld/a5QGwUmqV/+Jc=",
         "owner": "input-output-hk",
         "repo": "hackage.nix",
-        "rev": "834ac92115c32dabf23abd6b61f925e4d6edc9db",
+        "rev": "e14b5bdd5bfb5d58304b6dee6c706fe52a365dbe",
         "type": "github"
       },
       "original": {
@@ -206,11 +206,11 @@
         "stackage": "stackage"
       },
       "locked": {
-        "lastModified": 1732150281,
-        "narHash": "sha256-Va+jIjAZ8y0JQJXW7rmzUTPDugJFc2k1lySPHrdMIq4=",
+        "lastModified": 1732236706,
+        "narHash": "sha256-SAJOGpYd3shUVn4Tl+7yfkZvlvpZbBpjVv+r1l4IC+s=",
         "owner": "input-output-hk",
         "repo": "haskell.nix",
-        "rev": "e9eca9ab74f5d729ddf3ad2960b2444937f81675",
+        "rev": "ec0dceff52162768442320cadb9921ff867e4f69",
         "type": "github"
       },
       "original": {
@@ -684,16 +684,16 @@
     "ogmios-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1725966092,
-        "narHash": "sha256-c+5SikopKEylvxIZfp36qmdgElkTR7n95YCtLUZ78Q4=",
+        "lastModified": 1726920716,
+        "narHash": "sha256-9qXdShAfVswA8MJbsRDykCsJtEqLtKa+bLwerpSjSzs=",
         "owner": "CardanoSolutions",
         "repo": "ogmios",
-        "rev": "9619c8ff017844f6c0f1dcad4f6bcf9f24f12ebd",
+        "rev": "3275393edde9b2ce92e44f0beaf38acf6a85356d",
         "type": "github"
       },
       "original": {
         "owner": "CardanoSolutions",
-        "ref": "v6.6.2",
+        "ref": "v6.7.1",
         "repo": "ogmios",
         "type": "github"
       }
@@ -764,11 +764,11 @@
     "stackage": {
       "flake": false,
       "locked": {
-        "lastModified": 1732147927,
-        "narHash": "sha256-6pgxZmoFTrpnfelUmDPRxVp0o/MakXeM6adUtXK8cas=",
+        "lastModified": 1732234325,
+        "narHash": "sha256-nNyVymDwd+Aw078NXdd1kLFiYnT/fHSUpF34heeEYbA=",
         "owner": "input-output-hk",
         "repo": "stackage.nix",
-        "rev": "90cc47c495fe65b426410a1ecd2cb146dd91cb66",
+        "rev": "d5ccc74e2e0cb05ea5ca0881d68a7ca5188dc3e5",
         "type": "github"
       },
       "original": {
