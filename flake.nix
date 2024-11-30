@@ -2,11 +2,6 @@
   description = "ogmios";
 
   inputs = {
-    ogmios-src = {
-      url = "git+https://github.com/CardanoSolutions/ogmios?tag=v6.9.0&submodules=1";
-      flake = false;
-    };
-
     haskell-nix = {
       url = "github:input-output-hk/haskell.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -25,7 +20,7 @@
     };
   };
 
-  outputs = { self, ogmios-src, nixpkgs, haskell-nix, iohk-nix, CHaP, ... }:
+  outputs = { self, nixpkgs, haskell-nix, iohk-nix, CHaP, ... }:
     let
       defaultSystems = [
         "x86_64-linux"
@@ -45,6 +40,13 @@
         ];
         inherit (haskell-nix) config;
         inherit system;
+      };
+
+      ogmios-src = builtins.fetchGit {
+	url = "git@github.com:CardanoSolutions/ogmios.git";
+	ref = "v6.9.0";
+	rev = "a07c154eca6e4bf25ad1b3d50849f077aa628183";
+	submodules = true;
       };
 
       projectFor = { system }:

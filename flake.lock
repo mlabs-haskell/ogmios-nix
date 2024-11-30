@@ -681,24 +681,6 @@
         "type": "github"
       }
     },
-    "ogmios-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1731085301,
-        "narHash": "sha256-oKmPbAncujnkNvU9jB+a2MLvk6FWzuziN9LrelQoNfs=",
-        "ref": "refs/heads/master",
-        "rev": "87a4c4c424db46a32c27bac3546cbfd68f0ecf62",
-        "revCount": 1650,
-        "submodules": true,
-        "type": "git",
-        "url": "https://github.com/CardanoSolutions/ogmios?tag=v6.9.0"
-      },
-      "original": {
-        "submodules": true,
-        "type": "git",
-        "url": "https://github.com/CardanoSolutions/ogmios?tag=v6.9.0"
-      }
-    },
     "old-ghc-nix": {
       "flake": false,
       "locked": {
@@ -724,8 +706,7 @@
         "nixpkgs": [
           "haskell-nix",
           "nixpkgs-unstable"
-        ],
-        "ogmios-src": "ogmios-src"
+        ]
       }
     },
     "secp256k1": {
