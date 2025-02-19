@@ -3,7 +3,7 @@
 
   inputs = {
     ogmios-src = {
-      url = "git+https://github.com/CardanoSolutions/ogmios?tag=v6.9.0&submodules=1";
+      url = "git+https://github.com/CardanoSolutions/ogmios?ref=refs/tags/v6.10.0&submodules=1";
       flake = false;
     };
 
@@ -107,7 +107,7 @@
 
       devShell = perSystem (system: self.flake.${system}.devShell);
 
-      herculesCI.ciSystems = [ "x86_64-linux" "x86_64-darwin" ];
+      herculesCI.ciSystems = [ "x86_64-linux" ];
     };
 }
 
