@@ -107,7 +107,7 @@
 
       devShell = perSystem (system: self.flake.${system}.devShell);
 
-      herculesCI.ciSystems = [ "x86_64-linux" "x86_64-darwin" ];
+      herculesCI.ciSystems = [ "x86_64-linux" ];
     };
 }
 
