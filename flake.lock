@@ -628,17 +628,17 @@
     "ogmios-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1747926730,
-        "narHash": "sha256-b7gPdieBze/CmfHE5vsNR/9uWEqTJg6+NaJOW65m7EI=",
-        "ref": "refs/tags/v6.12.0",
-        "rev": "b553b0cfa1110eb47f4f498bd085eac8612c6e70",
-        "revCount": 1708,
+        "lastModified": 1749803743,
+        "narHash": "sha256-RTAuAcavCVJIN5oJ/v4Vpovzs4bf+lJvU30klXTIbAQ=",
+        "ref": "refs/tags/v6.13.0",
+        "rev": "2fe34670b59169350feb9b2ba9cc323af1acc748",
+        "revCount": 1724,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/CardanoSolutions/ogmios"
       },
       "original": {
-        "ref": "refs/tags/v6.12.0",
+        "ref": "refs/tags/v6.13.0",
         "submodules": true,
         "type": "git",
         "url": "https://github.com/CardanoSolutions/ogmios"
