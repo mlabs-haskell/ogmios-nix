@@ -3,7 +3,7 @@
 
   inputs = {
     ogmios-src = {
-      url = "git+https://github.com/CardanoSolutions/ogmios?ref=refs/tags/v6.13.0&submodules=1";
+      url = "git+https://github.com/CardanoSolutions/ogmios?ref=refs/tags/v6.14.0&submodules=1";
       flake = false;
     };
 
@@ -88,8 +88,14 @@
           };
 
           sha256map = {
-            "https://github.com/CardanoSolutions/cardano-ledger"."f051a2ed0db076a869d14643a65ce6e8250b6324" =
-              "1zi91lzms5kyjmc7r0p12hrvyg34dyqcvz3bkvsw9djjj4gngkbf";
+            "https://github.com/CardanoSolutions/cardano-ledger.git"."5cca15a1f0629c11e8d4d4daeb73428684f9c34f" =
+              "17674369nmypp53q5rk6ygxlwbfhmkdnkr320y7vm8iq3l406441";
+
+            "https://github.com/CardanoSolutions/ouroboros-network.git"."d3477c4e6b3243f89afb974914ea423a75873fa0" =
+              "1cgx2q7f8a8jkqkcapzqhv95qkal1968nwi1sfslj54xbrqwbivq";
+
+            "https://github.com/CardanoSolutions/ouroboros-consensus.git"."5bbbf9c8b4cd3dc3e3a80d13ef54b3a2ee43a585" =
+              "19xflcv4w0qdd4gkw2p8yyj4iaq0nvmk292h2936bm2z0pz72a1y";
           };
 
           modules = [
